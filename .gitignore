@@ -1,0 +1,8 @@
+__pycache__
+*.pyc
+.DS_Store
+MANIFEST
+*.egg-info
+dist/
+.pypirc
+.remote-sync.json

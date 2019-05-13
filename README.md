@@ -15,7 +15,7 @@ Pi Camera to resize the capture to Inception V3's required 299x299, it actually
 rounds up to 320x304. The captured image has to be cropped before passed to the
 Edge TPU.
 
-Here, I have filled those gaps by giving two additional demos:
+Here, I have filled those gaps by giving a few additional demos:
 
 1. `classify_capture.py`: This is the original official demo, kept for
 reference. It does not check the model input size against Pi Camera's capable
@@ -36,10 +36,15 @@ refreshed, Pi Camera spills out this error:
     picamera.exc.PiCameraMMALError: no buffers available: Resource temporarily unavailable; try again later
     ```
 
-    [I cannot find](https://github.com/waveform80/picamera/issues/448)
-    [any solution](https://github.com/waveform80/picamera/issues/320)
-    [after investigation.](https://github.com/waveform80/picamera/issues/393)
-    It seems to be an unfixed bug in the picamera package.
-    Fortunately, it does not seem to have any ill effects otherwise.
-    Object detection works fine, the program keeps on running. I will leave it
-    at that.
+    [I could not](https://github.com/waveform80/picamera/issues/448)
+    [find](https://github.com/waveform80/picamera/issues/320)
+    [any solution](https://github.com/waveform80/picamera/issues/393) ...
+
+    ... until I came across [AIY Vision Kit's source code](https://github.com/google/aiyprojects-raspbian),
+    a part of which I have incorporated into the following.
+
+4. `detect_capture_crop_with_annotator.py`: It does object detection as above,
+   but the overlay logic is separated into an `Annotator` class, which makes the
+   code a little cleaner. The `Annotator` class is taken from the AIY Vision Kit
+   project. It patches the picamera package to stop it from spilling out errors
+   mentioned above. Remember to set `PYTHONPATH` to use the `Annotator` class.
