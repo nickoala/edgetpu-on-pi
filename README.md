@@ -13,6 +13,7 @@ demos](https://github.com/google-coral/edgetpu/tree/master/examples):
   For example, if you tell Pi Camera to resize to Inception V3's required
   299x299, it actually rounds up to 320x304. The captured image has to be
   cropped before passed to Edge TPU.
+
 Resulting files are:
 
 1. `classify_capture.py`: Original official demo, kept for reference.
