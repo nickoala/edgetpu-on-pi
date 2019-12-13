@@ -2,7 +2,7 @@
 
 Additional sample code to run **image classification** and **object detection**
 on a [Coral USB accelerator](https://coral.ai/products/accelerator) from a
-Raspberry Pi, aiming to fill gaps in the [official
+Raspberry Pi, filling some gaps in the [official
 demos](https://github.com/google-coral/edgetpu/tree/master/examples):
 
 - I would like to see *object detection working on a video stream* where
@@ -12,8 +12,7 @@ demos](https://github.com/google-coral/edgetpu/tree/master/examples):
   *height* to multiples of 16, it cannot match some models' required input size.
   For example, if you tell Pi Camera to resize to Inception V3's required
   299x299, it actually rounds up to 320x304. The captured image has to be
-  cropped before passed to the Edge TPU.
-
+  cropped before passed to Edge TPU.
 Resulting files are:
 
 1. `classify_capture.py`: Original official demo, kept for reference.
