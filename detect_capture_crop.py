@@ -17,10 +17,10 @@ def main():
   parser = argparse.ArgumentParser()
   parser.add_argument(
       '--model', help='File path of Tflite model.', required=True)
-  parser.add_argument('--label', help='File path of label file.', required=True)
+  parser.add_argument('--label', help='File path of label file.')
   args = parser.parse_args()
 
-  labels = dataset_utils.read_label_file(args.label)
+  labels = dataset_utils.read_label_file(args.label) if args.label else None
   engine = DetectionEngine(args.model)
 
   with picamera.PiCamera() as camera:
@@ -71,12 +71,13 @@ def main():
         bottom_right = translate(c.bounding_box[1])
 
         annotator.bounding_box(top_left + bottom_right)
-        annotator.text(
-            top_left,
-            '{} {:.2f}'.format(labels[c.label_id], c.score),
-            font=font)
 
-        annotator.update()
+        text = '{} {:.2f}'.format(labels[c.label_id], c.score) \
+                if labels else '{:.2f}'.format(c.score)
+
+        annotator.text(top_left, text, font=font)
+
+      annotator.update()
 
     try:
       stream = io.BytesIO()
@@ -98,8 +99,7 @@ def main():
 
         annotate(results)
 
-        if results:
-          camera.annotate_text = '%.2fms' % (elapsed_ms * 1000.0,)
+        camera.annotate_text = '{:.2f}ms'.format(elapsed_ms * 1000.0)
 
     finally:
       # Maybe should make this an annotator method
